@@ -1,16 +1,128 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyBookList</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group input {
+      margin: 5px;
+      padding: 8px;
+    }
+    #submit {
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .delete {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+  <h1>MyBookList</h1>
 
+  <div class="form-group">
+    <input type="text" id="title" placeholder="Book Title">
+    <input type="text" id="author" placeholder="Author">
+    <input type="text" id="isbn" placeholder="ISBN#">
+    <button id="submit">Add Book</button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN#</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="book-list">
+      <!-- Rows will be added here dynamically -->
+    </tbody>
+  </table>
+
+  <script>
+    const submitBtn = document.getElementById("submit");
+    const bookList = document.getElementById("book-list");
+
+    submitBtn.addEventListener("click", function () {
+      // Get input values
+      const title = document.getElementById("title").value.trim();
+      const author = document.getElementById("author").value.trim();
+      const isbn = document.getElementById("isbn").value.trim();
+
+      if (title === "" || author === "" || isbn === "") {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      // Create a new row
+      const row = document.createElement("tr");
+
+      // Create cells
+      const titleCell = document.createElement("td");
+      titleCell.textContent = title;
+
+      const authorCell = document.createElement("td");
+      authorCell.textContent = author;
+
+      const isbnCell = document.createElement("td");
+      isbnCell.textContent = isbn;
+
+      const actionCell = document.createElement("td");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Clear";
+      deleteBtn.className = "delete";
+
+      // Add delete functionality
+      deleteBtn.addEventListener("click", function () {
+        row.remove();
+      });
+
+      actionCell.appendChild(deleteBtn);
+
+      // Append cells to row
+      row.appendChild(titleCell);
+      row.appendChild(authorCell);
+      row.appendChild(isbnCell);
+      row.appendChild(actionCell);
+
+      // Append row to table body
+      bookList.appendChild(row);
+
+      // Clear input fields
+      document.getElementById("title").value = "";
+      document.getElementById("author").value = "";
+      document.getElementById("isbn").value = "";
+    });
+  </script>
 </body>
-
 </html>
